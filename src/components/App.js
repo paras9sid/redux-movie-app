@@ -1,7 +1,11 @@
+//package imports
 import React from "react";
+
+//file imports
 import { data } from "../data";
 import Navbar from "./Navbar";
 import MovieCard from "./MovieCard";
+import { addMovies } from "../actions";
 
 class App extends React.Component {
   componentDidMount() {
@@ -13,10 +17,12 @@ class App extends React.Component {
     });
     //1.make api call
     //2.dispatch action - add movie to store
-    store.dispatch({
-      type: "ADD_MOVIES",
-      movies: data, // uncomment import data for now
-    });
+    // store.dispatch({
+    //   type: "ADD_MOVIES",
+    //   movies: data, // uncomment import data for now
+    // });
+
+    store.dispatch(addMovies(data)); // imported from actions-index.js
     console.log("state", this.props.store.getState());
   }
   render() {
