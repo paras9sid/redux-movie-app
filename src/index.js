@@ -10,13 +10,13 @@ import movies from "./reducers";
 
 const store = createStore(movies);
 console.log("store", store); // will show the properties of store in object form when clicked in console
-console.log("BEFORE-STATE", store.getState()); // empty array State as defined inr educer will reflect
+// console.log("BEFORE-STATE", store.getState()); // empty array State as defined inr educer will reflect
 
-store.dispatch({
-  type: "ADD_MOVIES",
-  movies: [{ name: "Superman" }],
-});
+// store.dispatch({
+//   type: "ADD_MOVIES",
+//   movies: [{ name: "Superman" }],
+// });
 
-console.log("AFTER STATE", store.getState());
+// console.log("AFTER STATE", store.getState());
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App store={store} />, document.getElementById("root"));
