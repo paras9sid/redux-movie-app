@@ -15,8 +15,8 @@ function App() {
 
         <div className="list">
           {/* grab the data from data.js and map over here */}
-          {data.map((movie) => (
-            <MovieCard movie={movie} />
+          {data.map((movie,index) => (
+            <MovieCard movie={movie} key={`movies-${index}`} />
           ))}
         </div>
       </div>
