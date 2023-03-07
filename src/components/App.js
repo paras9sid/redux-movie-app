@@ -25,6 +25,18 @@ class App extends React.Component {
     store.dispatch(addMovies(data)); // imported from actions-index.js
     console.log("state", this.props.store.getState());
   }
+
+  isMovieFavorite = (movie) => {
+    //it will check the state - movie is fav or not
+    const { favorites } = this.props.store.getState();
+    const index = favorites.indexOf(movie);
+
+    if (index !== -1) {
+      //WE FOUND THE MOVIE
+      return true;
+    }
+    return false;
+  };
   render() {
     const { list } = this.props.store.getState();
     console.log("RENDER", this.props.store.getState());
@@ -40,7 +52,12 @@ class App extends React.Component {
           <div className="list">
             {/* grab the data from data.js and map over here */}
             {list.map((movie, index) => (
-              <MovieCard movie={movie} key={`movies-${index}`} />
+              <MovieCard
+                movie={movie}
+                key={`movies-${index}`}
+                dispatch={this.props.store.dispatch}
+                isFavorite={this.isMovieFavorite(movie)}
+              />
             ))}
           </div>
         </div>
