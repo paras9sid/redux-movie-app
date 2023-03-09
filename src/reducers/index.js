@@ -9,7 +9,10 @@ const initialMoviesState = {
   favorites: [],
   showFavorites: false,
 };
-export default function movies(state = initialMoviesState, action) {
+
+//movie reducer
+export function movies(state = initialMoviesState, action) {
+  console.log('MOVIES REDUCER');
   // any change in state wheter state = [], or {} or "someString" or 1 will show in colse via indexjs root
   //state in store inititally empty array , and action trigger by UI
   // if (action.type === ADD_MOVIES) {
@@ -49,4 +52,27 @@ export default function movies(state = initialMoviesState, action) {
     default:
       return state;
   }
+}
+
+// creating search reducer
+
+const initialSearchState = {
+  result: {},
+};
+export function search(state = initialSearchState, action) {
+  console.log('SEARCH REDUCER');
+  return state;
+}
+
+//main rootReducrer - for combining reducers and calling in createStore
+
+const initialRootState = {
+  movies: initialMoviesState,
+  search: initialSearchState,
+};
+export default function rootReducer(state = initialRootState, action) {
+  return {
+    movies: movies(state.movies, action),
+    search: search(state.search, action),
+  };
 }
