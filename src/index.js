@@ -1,23 +1,23 @@
 //package imports
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 
 //file imports
 import App from "./components/App";
 import "./index.css";
-// import movies from "./reducers";
 import rootReducer from "./reducers";
 
-const store = createStore(rootReducer);
+const logger = function ({ dispatch, getState }) {
+  return function (next) {
+    return function (action) {
+      console.log("ACTION TYPE = ", action.type);
+      next(action);
+    };
+  };
+};
+
+const store = createStore(rootReducer, applyMiddleware(logger));
 console.log("store", store); // will show the properties of store in object form when clicked in console
-// console.log("BEFORE-STATE", store.getState()); // empty array State as defined inr educer will reflect
-
-// store.dispatch({
-//   type: "ADD_MOVIES",
-//   movies: [{ name: "Superman" }],
-// });
-
-// console.log("AFTER STATE", store.getState());
 
 ReactDOM.render(<App store={store} />, document.getElementById("root"));
