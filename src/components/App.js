@@ -38,51 +38,55 @@ class App extends React.Component {
     const displayMovies = showFavorites ? favorites : list;
 
     return (
-      <StoreContext.Consumer>
-        {(store) => {
-          return (
-            <div className="App">
-              <Navbar dispatch={this.props.store.dispatch} search={search} />
-              <div className="main">
-                <div className="tabs">
-                  <div
-                    className={`tab ${showFavorites ? "" : "active-tabs"}`}
-                    onClick={() => this.onChangeTab(false)}
-                  >
-                    Movies
-                  </div>
-                  <div
-                    className={`tab ${showFavorites ? "active-tabs" : ""}`}
-                    onClick={() => this.onChangeTab(true)}
-                  >
-                    Favorites
-                  </div>
-                </div>
-
-                <div className="list">
-                  {/* grab the data from data.js and map over here */}
-                  {/* {displayMovies.map((movie, index) => (
-                   */}
-                  {displayMovies.map((movie) => (
-                    <MovieCard
-                      movie={movie}
-                      // key={`movies-${index}`}
-                      key={movie.imdbID}
-                      dispatch={this.props.store.dispatch}
-                      isFavorite={this.isMovieFavorite(movie)}
-                    />
-                  ))}
-                </div>
-                {displayMovies.length === 0 ? (
-                  <div className="no-movies">No movies to display!</div>
-                ) : null}
-              </div>
+      <div className="App">
+        <Navbar search={search} />
+        <div className="main">
+          <div className="tabs">
+            <div
+              className={`tab ${showFavorites ? "" : "active-tabs"}`}
+              onClick={() => this.onChangeTab(false)}
+            >
+              Movies
             </div>
-          );
-        }}
-      </StoreContext.Consumer>
+            <div
+              className={`tab ${showFavorites ? "active-tabs" : ""}`}
+              onClick={() => this.onChangeTab(true)}
+            >
+              Favorites
+            </div>
+          </div>
+
+          <div className="list">
+            {/* grab the data from data.js and map over here */}
+            {/* {displayMovies.map((movie, index) => (
+             */}
+            {displayMovies.map((movie) => (
+              <MovieCard
+                movie={movie}
+                // key={`movies-${index}`}
+                key={movie.imdbID}
+                dispatch={this.props.store.dispatch}
+                isFavorite={this.isMovieFavorite(movie)}
+              />
+            ))}
+          </div>
+          {displayMovies.length === 0 ? (
+            <div className="no-movies">No movies to display!</div>
+          ) : null}
+        </div>
+      </div>
     );
   }
 }
 
-export default App;
+class AppWrapper extends React.Component {
+  render() {
+    return (
+      <StoreContext.Consumer>
+        {(store) => <App store={store} />}
+      </StoreContext.Consumer>
+    );
+  }
+}
+// export default App;
+export default AppWrapper;
