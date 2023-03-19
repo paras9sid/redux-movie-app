@@ -1,12 +1,12 @@
 //package imports
 import React from "react";
+import { connect } from "react-redux";
 
 //file imports
 import { data } from "../data";
 import Navbar from "./Navbar";
 import MovieCard from "./MovieCard";
 import { addMovies, setShowFavorites } from "../actions";
-import { connect } from "..";
 
 class App extends React.Component {
   componentDidMount() {
