@@ -6,18 +6,17 @@ import { data } from "../data";
 import Navbar from "./Navbar";
 import MovieCard from "./MovieCard";
 import { addMovies, setShowFavorites } from "../actions";
-import { StoreContext } from "..";
+import { connect } from "..";
 
 class App extends React.Component {
   componentDidMount() {
     //modifying abve code as per lecture
-    this.props.store.subscribe(() => this.forceUpdate());
-    this.props.store.dispatch(addMovies(data));
+    this.props.dispatch(addMovies(data));
   }
 
   isMovieFavorite = (movie) => {
     //it will check the state - movie is fav or not
-    const { movies } = this.props.store.getState();
+    const { movies } = this.props;
     const index = movies.favorites.indexOf(movie);
 
     if (index !== -1) {
@@ -28,10 +27,10 @@ class App extends React.Component {
   };
 
   onChangeTab(val) {
-    this.props.store.dispatch(setShowFavorites(val));
+    this.props.dispatch(setShowFavorites(val));
   }
   render() {
-    const { movies, search } = this.props.store.getState();
+    const { movies, search } = this.props;
     const { list, favorites = [], showFavorites = [] } = movies;
     // console.log("RENDER", this.props.store.getState());
 
@@ -65,7 +64,7 @@ class App extends React.Component {
                 movie={movie}
                 // key={`movies-${index}`}
                 key={movie.imdbID}
-                dispatch={this.props.store.dispatch}
+                dispatch={this.props.dispatch}
                 isFavorite={this.isMovieFavorite(movie)}
               />
             ))}
@@ -79,14 +78,25 @@ class App extends React.Component {
   }
 }
 
-class AppWrapper extends React.Component {
-  render() {
-    return (
-      <StoreContext.Consumer>
-        {(store) => <App store={store} />}
-      </StoreContext.Consumer>
-    );
-  }
+// class AppWrapper extends React.Component {
+//   render() {
+//     return (
+//       <StoreContext.Consumer>
+//         {(store) => <App store={store} />}
+//       </StoreContext.Consumer>
+//     );
+//   }
+// }
+// // export default App;
+// export default AppWrapper;
+
+function mapStateToProps(state) {
+  return {
+    movies: state.movies,
+    search: state.movies,
+  };
 }
-// export default App;
-export default AppWrapper;
+
+const connectedAppComponenet = connect(mapStateToProps)(App);
+
+export default connectedAppComponenet;
