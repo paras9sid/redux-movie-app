@@ -7,6 +7,7 @@ class Navbar extends React.Component {
     super(props);
     this.state = {
       searchText: "",
+      // showSearchResults: true,
     };
   }
   handleAddToMovies = (movie) => {
